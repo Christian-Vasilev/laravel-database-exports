@@ -14,9 +14,10 @@
 1. Download or checkout the latest copy from here (https://github.com/Christian-Vasilev/laravel-database-exports).
 2. If you have not renamed the `.env.example` file to `.env`, you should do that now.
 3. Set port and database in `.env` file.
-4. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
-5. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
-6. Go to `http://localhost/`, register and use the export.
+4. Run the following command to generate application key `php artisan key:generate`
+5. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
+6. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
+7. Go to `http://localhost/`, register and use the export.
 
 > Example .env for testing with docker.
 
@@ -34,7 +35,7 @@ DB_PASSWORD=test
 1. Download or checkout the latest copy from here (https://github.com/Christian-Vasilev/laravel-database-exports).
 2. If you have not renamed the `.env.example` file to `.env`, you should do that now.
 3. Set port and database in `.env` file.
-4. Run the following command to seed the data `php artisan key:generate`
+4. Run the following command to generate application key `php artisan key:generate`
 5. Run the following command to seed the data `php artisan db:seed`
 6. Run the following command to start your project `php artisan serve`
 7. Go to `http://localhost/`, register and use the export.
