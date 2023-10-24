@@ -8,6 +8,7 @@
 1. Use Jobs for generating the exports
 2. Use currency conversion in orders
 3. Add more filters in exports
+4. Add isolated testing in separate containers
 
 ## Setup with docker
 
