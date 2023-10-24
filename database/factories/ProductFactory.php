@@ -15,8 +15,8 @@ class ProductFactory extends Factory
      * Related model to Factory
      *
      * @var string
-     * @type Product
      *
+     * @type Product
      */
     protected $model = Product::class;
 
@@ -37,7 +37,7 @@ class ProductFactory extends Factory
             'price' => fake()->numberBetween(1000, 50000),
             'currency' => 'EUR',
             'product_type' => fake()->randomElement(['account', 'ingame_goods', 'physical_goods']),
-            'product_image' => fake()->word() . '.webp',
+            'product_image' => fake()->word().'.webp',
             'show_in_store' => fake()->randomElement([0, 1]),
             'position' => fake()->unique()->randomNumber(),
             'created_at' => $date,

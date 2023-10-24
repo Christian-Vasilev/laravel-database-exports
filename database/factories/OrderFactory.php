@@ -15,8 +15,8 @@ class OrderFactory extends Factory
      * Related model to Factory
      *
      * @var string
-     * @type Order
      *
+     * @type Order
      */
     protected $model = Order::class;
 

@@ -16,10 +16,6 @@ enum ProductTypeEnum: string
 
     /**
      * Filter cases and return only the ones that can be filtered by
-     *
-     * @param string $selectedType
-     *
-     * @return array
      */
     public static function getFilterableTypesAsArray(string $selectedType): array
     {

@@ -13,10 +13,6 @@ enum OrderStatusEnum: string
 
     /**
      * Filter cases and return only the ones that can be filtered by
-     *
-     * @param string $selectedStatus
-     *
-     * @return array
      */
     public static function getFilterableStatusesAsArray(string $selectedStatus): array
     {

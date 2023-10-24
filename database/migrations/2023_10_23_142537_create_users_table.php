@@ -23,7 +23,7 @@ return new class extends Migration
             $table->tinyInteger('dob_day')->unsigned();
             $table->tinyInteger('dob_month')->unsigned();
             $table->smallInteger('dob_year')->unsigned();
-            $table->enum('player_role', [1,2,3]);
+            $table->enum('player_role', [1, 2, 3]);
             $table->string('avatar');
             $table->enum('avatar_type', ['raceAvatar', 'uploadedCharacter']);
             $table->enum('avatar_gender', ['Male', 'Female']);

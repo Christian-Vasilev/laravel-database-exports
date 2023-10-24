@@ -14,8 +14,8 @@ class UserFactory extends Factory
      * Related model to Factory
      *
      * @var string
-     * @type User
      *
+     * @type User
      */
     protected $model = User::class;
 
@@ -39,7 +39,7 @@ class UserFactory extends Factory
             'dob_month' => (int) fake()->month(),
             'dob_year' => (int) fake()->year(),
             'player_role' => fake()->numberBetween(1, 3),
-            'avatar' => fake()->word() . '.webp',
+            'avatar' => fake()->word().'.webp',
             'avatar_type' => fake()->randomElement(['raceAvatar', 'uploadedCharacter']),
             'avatar_gender' => fake()->randomElement(['Male', 'Female']),
             'newsletter_subscribed' => fake()->randomElement([0, 1]),

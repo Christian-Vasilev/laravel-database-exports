@@ -12,8 +12,6 @@ class Order extends Model
 
     /**
      * User Relations
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -22,8 +20,6 @@ class Order extends Model
 
     /**
      * Product relation
-     *
-     * @return BelongsTo
      */
     public function product(): BelongsTo
     {

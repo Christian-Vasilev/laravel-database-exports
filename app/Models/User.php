@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatusEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,8 +36,6 @@ class User extends Model
 
     /**
      * User -> Products relationship
-     *
-     * @return HasMany
      */
     public function orders(): HasMany
     {
@@ -45,21 +44,14 @@ class User extends Model
 
     /**
      * Return only records with status confirmed from relationship
-     *
-     * @return HasMany
      */
     public function ordersConfirmed(): HasMany
     {
-        return $this->hasMany(Order::class)->whereStatus('confirmed');
+        return $this->hasMany(Order::class)->whereStatus(OrderStatusEnum::CONFIRMED->value);
     }
 
     /**
      * Scope orders by given array of statuses
-     *
-     * @param Builder $query
-     * @param array $statuses
-     *
-     * @return void
      */
     public function scopeOrderStatus(Builder $query, array $statuses): void
     {
@@ -71,11 +63,6 @@ class User extends Model
 
     /**
      * Scope order product by given array of types
-     *
-     * @param Builder $query
-     * @param array $types
-     *
-     * @return void
      */
     public function scopeProductType(Builder $query, array $types): void
     {

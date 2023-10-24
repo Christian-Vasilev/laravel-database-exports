@@ -6,8 +6,6 @@ use App\Enums\OrderStatusEnum;
 use App\Enums\ProductTypeEnum;
 use App\Exports\UsersExport;
 use App\Http\Requests\StoreExportRequest;
-use App\Models\User;
-use Illuminate\Database\Query\JoinClause;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller
