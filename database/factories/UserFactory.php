@@ -2,14 +2,23 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
+    /**
+     * Related model to Factory
+     *
+     * @var string
+     * @type User
+     *
+     */
+    protected $model = User::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,22 +26,25 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-        ];
-    }
+        $date = now()->subDays(fake()->randomNumber(3));
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return [
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->unique()->phoneNumber(),
+            'nickname' => fake()->userName(),
+            'name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'country' => fake()->country(),
+            'dob_day' => (int) fake()->date('d'),
+            'dob_month' => (int) fake()->dayOfMonth(),
+            'dob_year' => (int) fake()->year(),
+            'player_role' => fake()->numberBetween(1, 3),
+            'avatar' => fake()->word() . '.webp',
+            'avatar_type' => fake()->randomElement(['raceAvatar', 'uploadedCharacter']),
+            'avatar_gender' => fake()->randomElement(['Male', 'Female']),
+            'newsletter_subscribed' => fake()->randomElement([0, 1]),
+            'created_at' => $date,
+            'updated_at' => $date,
+        ];
     }
 }

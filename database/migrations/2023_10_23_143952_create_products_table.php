@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('product_name');
-            $table->string('product_description');
+            $table->text('product_description');
             $table->string('product_short_description');
             $table->integer('price')->unsigned();
             $table->string('currency');

@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('product_id');
-            $table->string('payment_type');
+            $table->string('payment_type')->nullable();
             $table->unsignedInteger('payment_id')->nullable();
             $table->unsignedInteger('total_amount');
             $table->string('currency');
