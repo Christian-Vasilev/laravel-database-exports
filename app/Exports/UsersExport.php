@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -14,6 +15,13 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
         private readonly array $productType
     ) {}
 
+    /**
+     * Map value for each row in the export
+     *
+     * @param $row
+     *
+     * @return array
+     */
     public function map($row): array
     {
         return [
@@ -38,6 +46,11 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
         ];
     }
 
+    /**
+     * Add custom heading name for the first row
+     *
+     * @return string[]
+     */
     public function headings(): array
     {
         return [
@@ -62,8 +75,17 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
         ];
     }
 
+    /**
+     * Generate export collection
+     *
+     * @return Collection
+     */
     public function collection()
     {
-        return User::with('orders', 'orders.product')->orderStatus($this->orderStatus)->productType($this->productType)->groupBy('id')->get();
+        return User::with('orders', 'orders.product')
+            ->orderStatus($this->orderStatus)
+            ->productType($this->productType)
+            ->groupBy('id')
+            ->get();
     }
 }

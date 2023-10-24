@@ -11,7 +11,7 @@
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="max-w-xl">
                         <section>
-                            <form method="post" action="{{ route('exports.store') }}" class="mt-6 space-y-6">
+                            <form method="post" action="{{ route('exports.export') }}" class="mt-6 space-y-6">
                                 @csrf
                                 <header>
                                     <h2 class="text-lg font-medium text-gray-900">

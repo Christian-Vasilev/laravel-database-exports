@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreExportRequest extends FormRequest
@@ -17,12 +18,12 @@ class StoreExportRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            'type' => 'required|in:all,account,ingame_goods,physical_good',
+            'type' => 'required|in:all,account,ingame_goods,physical_goods',
             'status' => 'required|in:all,confirmed,pending,declined'
         ];
     }

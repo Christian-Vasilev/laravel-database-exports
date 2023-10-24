@@ -2,7 +2,7 @@
 1. Laravel 10.x (https://laravel.com/docs/10.x)
 2. MySQL (https://www.mysql.com/)
 3. Docker 20.10 or above (https://www.docker.com/)
-4. PHP 8.0 or above (https://php.net)
+4. PHP 8.1 or above (https://php.net)
 
 ## Next steps
 1. Use Jobs for generating the exports

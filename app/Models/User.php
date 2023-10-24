@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\DB;
 
 class User extends Model
 {
@@ -43,11 +42,25 @@ class User extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * Return only records with status confirmed from relationship
+     *
+     * @return HasMany
+     */
     public function ordersConfirmed(): HasMany
     {
         return $this->hasMany(Order::class)->whereStatus('confirmed');
     }
 
+    /**
+     * Scope orders by given array of statuses
+     *
+     * @param Builder $query
+     * @param array $statuses
+     *
+     * @return void
+     */
     public function scopeOrderStatus(Builder $query, array $statuses): void
     {
         $query->whereHas(
@@ -56,19 +69,19 @@ class User extends Model
         );
     }
 
+    /**
+     * Scope order product by given array of types
+     *
+     * @param Builder $query
+     * @param array $types
+     *
+     * @return void
+     */
     public function scopeProductType(Builder $query, array $types): void
     {
         $query->whereHas(
             'orders.product',
             fn (Builder $subQuery): Builder => $subQuery->whereIn('product_type', $types)
-        );
-    }
-
-    public function scopeWithTotalSum(Builder $query): void
-    {
-        $query->whereHas(
-            'orders',
-            fn (Builder $subQuery): Builder => $subQuery->addSelect(DB::raw('sum(total_amount) as `total`'))->groupBy('user_id')
         );
     }
 }
