@@ -36,7 +36,7 @@ class UserFactory extends Factory
             'last_name' => fake()->lastName(),
             'country' => fake()->country(),
             'dob_day' => (int) fake()->date('d'),
-            'dob_month' => (int) fake()->dayOfMonth(),
+            'dob_month' => (int) fake()->month(),
             'dob_year' => (int) fake()->year(),
             'player_role' => fake()->numberBetween(1, 3),
             'avatar' => fake()->word() . '.webp',

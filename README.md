@@ -1,66 +1,68 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Technologies used
+1. Laravel 10.x (https://laravel.com/docs/10.x)
+2. MySQL (https://www.mysql.com/)
+3. Docker 20.10 or above (https://www.docker.com/)
+4. PHP 8.0 or above (https://php.net)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Next steps
+1. Use Jobs for generating the exports
+2. Use currency conversion in orders
+3. Add more filters in exports
 
-## About Laravel
+## Setup with docker
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Download or checkout the latest copy from here (https://github.com/Christian-Vasilev/laravel-database-exports).
+2. If you have not renamed the `.env.example` file to `.env`, you should do that now.
+3. Set port and database in `.env` file.
+4. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
+5. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
+6. Go to `http://localhost/`, register and use the export.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> Example .env for testing with docker.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```env
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=test
+DB_PASSWORD=test
+```
 
-## Learning Laravel
+## Setup without docker
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Download or checkout the latest copy from here (https://github.com/Christian-Vasilev/laravel-database-exports).
+2. If you have not renamed the `.env.example` file to `.env`, you should do that now.
+3. Set port and database in `.env` file.
+4. Run the following command to seed the data `php artisan key:generate`
+5. Run the following command to seed the data `php artisan db:seed`
+6. Run the following command to start your project `php artisan serve`
+7. Go to `http://localhost/`, register and use the export.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Useful queries to ensure that data is right and exports works
 
-## Laravel Sponsors
+> Get total of confirmed orders for specific user
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```sql
+SELECT SUM(`orders`.`total_amount` ) as `total` FROM `users`
+INNER JOIN `orders` ON `orders`.`user_id`  = `users`.`id`
+    AND `orders`.`status` = 'confirmed'
+INNER JOIN `products` ON `orders`.`product_id` = `products`.`id`
+    AND `products`.`product_type` IN ('account', 'ingame_goods', 'physical_goods')
+WHERE `user_id`  = 36709
+GROUP BY `user_id`;
+```
 
-### Premium Partners
+> Get users with more than one order
+```sql
+SELECT `user_id`, count(*) as `count`
+FROM `orders`
+GROUP BY(`user_id`)
+HAVING COUNT(*) > 1
+ORDER BY `count` DESC
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Author Information
+The project originally started by [Kristian Vasilev](https://github.com/Christian-Vasilev)
