@@ -1,3 +1,7 @@
+## Short Demo
+
+![](https://i.imgur.com/IjehXh8.gif)
+
 ## Technologies used
 1. Laravel 10.x (https://laravel.com/docs/10.x)
 2. MySQL (https://www.mysql.com/)
@@ -15,10 +19,11 @@
 1. Download or checkout the latest copy from here (https://github.com/Christian-Vasilev/laravel-database-exports).
 2. If you have not renamed the `.env.example` file to `.env`, you should do that now.
 3. Set port and database in `.env` file.
-4. Run the following command to generate application key `php artisan key:generate`
-5. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
-6. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
-7. Go to `http://localhost/`, register and use the export.
+4. Run `composer install` in the root directory of the project
+5. Run the following command to generate application key `php artisan key:generate`
+6. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
+7. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
+8. Go to `http://localhost/`, register and use the export.
 
 > Example .env for testing with docker.
 
@@ -36,10 +41,11 @@ DB_PASSWORD=test
 1. Download or checkout the latest copy from here (https://github.com/Christian-Vasilev/laravel-database-exports).
 2. If you have not renamed the `.env.example` file to `.env`, you should do that now.
 3. Set port and database in `.env` file.
-4. Run the following command to generate application key `php artisan key:generate`
-5. Run the following command to seed the data `php artisan db:seed`
-6. Run the following command to start your project `php artisan serve`
-7. Go to `http://localhost/`, register and use the export.
+4. Run `composer install` in the root directory of the project
+5. Run the following command to generate application key `php artisan key:generate`
+6. Run the following command to seed the data `php artisan db:seed`
+7. Run the following command to start your project `php artisan serve`
+8. Go to `http://localhost/`, register and use the export.
 
 
 ## Useful queries to ensure that data is right and exports works
@@ -47,7 +53,7 @@ DB_PASSWORD=test
 > Get total of confirmed orders for specific user
 
 ```sql
-SELECT SUM(`orders`.`total_amount` ) as `total` FROM `users`
+SELECT users.*, SUM(`orders`.`total_amount` ) as `total` FROM `users`
 INNER JOIN `orders` ON `orders`.`user_id`  = `users`.`id`
     AND `orders`.`status` = 'confirmed'
 INNER JOIN `products` ON `orders`.`product_id` = `products`.`id`
@@ -64,7 +70,6 @@ GROUP BY(`user_id`)
 HAVING COUNT(*) > 1
 ORDER BY `count` DESC
 ```
-
 
 ## Author Information
 The project originally started by [Kristian Vasilev](https://github.com/Christian-Vasilev)

@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\User;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -82,10 +83,25 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
      */
     public function collection()
     {
-        return User::with('orders', 'orders.product')
-            ->orderStatus($this->orderStatus)
-            ->productType($this->productType)
-            ->groupBy('id')
+        return User::selectRaw('users.*, SUM(orders.total_amount) as total')
+            ->join(
+                'orders',
+                fn (JoinClause $join) => $join->on('orders.user_id', '=', 'users.id')
+                    ->where('orders.status', '=', $this->orderStatus)
+            )->join(
+                'products',
+                fn (JoinClause $join) => $join->on('orders.product_id', '=', 'products.id')
+                    ->whereIn('products.product_type', $this->productType)
+            )
+            ->groupBy('users.id')
             ->get();
+
+        // The Eloquent way, but also a more slow way.
+
+//        return User::with('orders', 'orders.product')
+//            ->orderStatus($this->orderStatus)
+//            ->productType($this->productType)
+//            ->groupBy('id')
+//            ->get();
     }
 }
