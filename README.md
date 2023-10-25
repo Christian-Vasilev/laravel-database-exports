@@ -24,6 +24,7 @@
 6. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
 7. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
 8. Go to `http://localhost/`, register and use the export.
+9. To run tests use `./vendor/bin/sail test`
 
 > Example .env for testing with docker.
 
@@ -46,6 +47,7 @@ DB_PASSWORD=test
 6. Run the following command to seed the data `php artisan db:seed`
 7. Run the following command to start your project `php artisan serve`
 8. Go to `http://localhost/`, register and use the export.
+9. To run tests use `php artisan test`
 
 
 ## Useful queries to ensure that data is right and exports works

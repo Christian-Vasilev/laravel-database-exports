@@ -24,7 +24,6 @@ class StoreExportRequest extends FormRequest
     {
         return [
             'type' => 'required|in:all,account,ingame_goods,physical_goods',
-            'status' => 'required|in:all,confirmed,pending,declined',
         ];
     }
 }

@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // Export Routes
     Route::get('/exports', [ExportController::class, 'index'])->name('exports.index');
-    Route::post('/exports', [ExportController::class, 'export'])->name('exports.export');
+    Route::post('/exports', [ExportController::class, 'users'])->name('exports.users');
 });
 
 require __DIR__.'/auth.php';

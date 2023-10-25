@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\OrderStatusEnum;
 use App\Enums\ProductTypeEnum;
 use App\Exports\UsersExport;
 use App\Http\Requests\StoreExportRequest;
@@ -16,7 +15,6 @@ class ExportController extends Controller
     public function index()
     {
         return view('exports.index', [
-            'statuses' => OrderStatusEnum::cases(),
             'types' => ProductTypeEnum::cases(),
         ]);
     }
@@ -24,11 +22,10 @@ class ExportController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function export(StoreExportRequest $request)
+    public function users(StoreExportRequest $request)
     {
-        $orderStatuses = OrderStatusEnum::getFilterableStatusesAsArray($request->get('status'));
         $productTypes = ProductTypeEnum::getFilterableTypesAsArray($request->get('type'));
 
-        return Excel::download(new UsersExport($orderStatuses, $productTypes), 'export.xlsx');
+        return Excel::download(new UsersExport($productTypes), 'export.xlsx');
     }
 }

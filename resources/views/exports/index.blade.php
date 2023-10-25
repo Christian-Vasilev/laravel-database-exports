@@ -11,7 +11,7 @@
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <div class="max-w-xl">
                         <section>
-                            <form method="post" action="{{ route('exports.export') }}" class="mt-6 space-y-6">
+                            <form method="post" action="{{ route('exports.users') }}" class="mt-6 space-y-6">
                                 @csrf
                                 <header>
                                     <h2 class="text-lg font-medium text-gray-900">
@@ -29,26 +29,6 @@
                                         @endforeach
                                     </x-select>
                                     <x-input-error :messages="$errors->get('type')" ></x-input-error>
-                                </div>
-
-                                <hr class="block w-full">
-
-                                <header>
-                                    <h2 class="text-lg font-medium text-gray-900">
-                                        {{ __('Order Filters') }}
-                                    </h2>
-                                </header>
-
-                                <div>
-                                    <x-input-label for="order-status" :value="__('Status')"/>
-                                    <x-select id="order-status" name="status" class="mt-1 block w-full">
-                                        @foreach($statuses as $status)
-                                            <option value="{{ strtolower($status->value) }}">
-                                                {{ __(ucfirst($status->value)) }}
-                                            </option>
-                                        @endforeach
-                                    </x-select>
-                                    <x-input-error :messages="$errors->get('status')" ></x-input-error>
                                 </div>
 
                                 <div class="flex items-center gap-4">

@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Enums\OrderStatusEnum;
 use App\Models\User;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
@@ -12,7 +13,6 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 class UsersExport implements FromCollection, WithHeadings, WithMapping
 {
     public function __construct(
-        private readonly array $orderStatus,
         private readonly array $productType
     ) {
     }
@@ -38,9 +38,9 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping
             'avatar_type' => $row->avatar_type,
             'avatar_gender' => $row->avatar_gender,
             'newsletter_subscribed' => $row->newsletter_subscribed,
-            'total' => $row->ordersConfirmed->sum('total_amount'),
             'created_at' => $row->created_at,
             'updated_at' => $row->updated_at,
+            'total' => $row->ordersConfirmed->sum('total_amount'),
         ];
     }
 
@@ -67,24 +67,22 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping
             'Avatar Type',
             'Avatar Gender',
             'Is subscribed to newsletter',
-            'Total',
             'created_at',
             'updated_at',
+            'Total',
         ];
     }
 
     /**
      * Generate export collection
-     *
-     * @return Collection
      */
-    public function collection()
+    public function collection(): Collection
     {
         return User::selectRaw('users.*, SUM(orders.total_amount) as total')
             ->join(
                 'orders',
                 fn (JoinClause $join) => $join->on('orders.user_id', '=', 'users.id')
-                    ->where('orders.status', '=', $this->orderStatus)
+                    ->where('orders.status', '=', OrderStatusEnum::CONFIRMED->value)
             )->join(
                 'products',
                 fn (JoinClause $join) => $join->on('orders.product_id', '=', 'products.id')
