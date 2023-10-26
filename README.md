@@ -21,10 +21,11 @@
 3. Set port and database in `.env` file.
 4. Run `composer install` in the root directory of the project
 5. Run the following command to generate application key `php artisan key:generate`
-6. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
-7. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
-8. Go to `http://localhost/`, register and use the export.
-9. To run tests use `./vendor/bin/sail test`
+6. Run the following command to migrate the database structure `./vendor/bin/sail artisan migrate`
+7. Run the following command from your root project directory `./vendor/bin/sail up --build -d`
+8. Run the following command to seed the data `./vendor/bin/sail php artisan db:seed`
+9. Go to `http://localhost/`, register and use the export.
+10. To run tests use `./vendor/bin/sail test`
 
 > Example .env for testing with docker.
 
@@ -44,10 +45,11 @@ DB_PASSWORD=test
 3. Set port and database in `.env` file.
 4. Run `composer install` in the root directory of the project
 5. Run the following command to generate application key `php artisan key:generate`
-6. Run the following command to seed the data `php artisan db:seed`
-7. Run the following command to start your project `php artisan serve`
-8. Go to `http://localhost/`, register and use the export.
-9. To run tests use `php artisan test`
+6. Run the following command to migrate the database structure `php artisan migrate`
+7. Run the following command to seed the data `php artisan db:seed`
+8. Run the following command to start your project `php artisan serve`
+9. Go to `http://localhost/`, register and use the export.
+10. To run tests use `php artisan test`
 
 
 ## Useful queries to ensure that data is right and exports works
